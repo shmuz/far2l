@@ -372,7 +372,7 @@ local function Open_CommandLine (strCmdLine)
         if not OK then Quit(1) end
         if not R.test_all then Quit(2) end
         OK = pcall(R.test_all)
-        Quit(OK and 0 or 3)
+        Quit(OK and 123 or 3)
       ]], 0, "CtrlShiftF12")
     elseif cmd == "browser" then
       macrobrowser()
