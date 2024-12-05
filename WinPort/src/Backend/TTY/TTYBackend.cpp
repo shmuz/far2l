@@ -779,10 +779,14 @@ fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 3\n");
 fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 4\n");
 
 		if (override_default_palette != ((tweaks & CONSOLE_TTY_PALETTE_OVERRIDE) != 0)) {
+fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 4-1\n");
 			std::unique_lock<std::mutex> lock(_async_mutex);
+fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 4-2\n");
 			_ae.palette = true;
 			_async_cond.notify_all();
+fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 4-3\n");
 			while (_ae.palette) {
+fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 4-4\n");
 				_async_cond.wait(lock);
 			}
 		}
