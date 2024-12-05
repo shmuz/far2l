@@ -78,11 +78,15 @@ static DWORD ApplyConsoleTweaks()
 		tweaks|= CONSOLE_OSC52CLIP_SET;
 	if (Opt.TTYPaletteOverride)
 		tweaks|= CONSOLE_TTY_PALETTE_OVERRIDE;
-	return WINPORT(SetConsoleTweaks)(tweaks);
+fprintf(stderr, "ApplyConsoleTweaks() 1\n");
+	DWORD ret = WINPORT(SetConsoleTweaks)(tweaks);
+fprintf(stderr, "ApplyConsoleTweaks() 2\n");
+	return ret;
 }
 
 static void ApplySudoConfiguration()
 {
+fprintf(stderr, "ApplySudoConfiguration() 1\n");
 	const std::string &sudo_app = GetHelperPathName("far2m_sudoapp");
 	const std::string &askpass_app = GetHelperPathName("far2m_askpass");
 
@@ -91,9 +95,11 @@ static void ApplySudoConfiguration()
 		mode = Opt.SudoConfirmModify ? SCM_CONFIRM_MODIFY : SCM_CONFIRM_NONE;
 	} else
 		mode = SCM_DISABLE;
+fprintf(stderr, "ApplySudoConfiguration() 2\n");
 	sudo_client_configure(mode, Opt.SudoPasswordExpiration, sudo_app.c_str(), askpass_app.c_str(),
 			Wide2MB(Msg::SudoTitle).c_str(), Wide2MB(Msg::SudoPrompt).c_str(),
 			Wide2MB(Msg::SudoConfirm).c_str());
+fprintf(stderr, "ApplySudoConfiguration() 3\n");
 }
 
 static void AddHistorySettings(DialogBuilder &Builder, FarLangMsg MTitle, int *OptEnabled, int *OptCount)
