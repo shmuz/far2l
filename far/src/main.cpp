@@ -303,7 +303,7 @@ static int MainProcess(
 
 			fprintf(stderr, "STARTUP: %llu\n", (unsigned long long)(clock() - cl_start));
 
-			if( Opt.IsFirstStart ) {
+			if( false && Opt.IsFirstStart ) { //### possible reason for timeout'ed exit
 				DWORD tweaks = WINPORT(SetConsoleTweaks)(TWEAKS_ONLY_QUERY_SUPPORTED);
 				if (tweaks & TWEAK_STATUS_SUPPORT_OSC52CLIP_SET) {
 					if (Message(0, 2, // at 1st start always only English and we not need use Msg here
