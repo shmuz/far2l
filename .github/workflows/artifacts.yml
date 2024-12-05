@@ -66,4 +66,5 @@ jobs:
     - name: Test plugin luamacro
       working-directory: ${{github.workspace}}/build/install
       shell: bash
-      run: ./far2m --tty lm:test
+      run: FAR_STD=- ./far2m lm:test
+      # run: ./far2m --tty lm:test
