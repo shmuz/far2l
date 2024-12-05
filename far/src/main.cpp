@@ -185,8 +185,11 @@ static int MainProcess(
     int StartLine,
     int StartChar)
 {
+	fprintf(stderr, "Entered MainProcess()...\n");
+
 	SCOPED_ACTION(InterThreadCallsDispatcherThread);
 	{
+		fprintf(stderr, "MainProcess: after InterThreadCallsDispatcherThread...\n");
 		clock_t cl_start = clock();
 		SCOPED_ACTION(ChangePriority)(ChangePriority::NORMAL);
 		ControlObject CtrlObj;
@@ -258,7 +261,9 @@ static int MainProcess(
 			}
 
 			// теперь все готово - создаем панели!
+	fprintf(stderr, "MainProcess: about to call CtrlObj.Init()...\n");
 			CtrlObj.Init();
+	fprintf(stderr, "MainProcess: CtrlObj.Init() returned\n");
 
 			// а теперь "провалимся" в каталог или хост-файл (если получится ;-)
 			if (!strDestName1.IsEmpty())  // активная панель
@@ -419,6 +424,8 @@ int FarAppMain(int argc, char **argv)
 	// макросы не дисаблим
 	Opt.Macro.DisableMacro=0;
 	bool bCustomPlugins = false;
+
+	fprintf(stderr, "Parsing command line...\n");
 
 	for (int I=1; I<argc; I++)
 	{
@@ -652,6 +659,7 @@ int FarAppMain(int argc, char **argv)
 	if ( Opt.OnlyEditorViewerUsed == Options::ONLY_EDITOR && strEditViewArg.IsEmpty() )
 		strEditViewArg = Msg::NewFileName;
 
+	fprintf(stderr, "About to call MainProcess()...\n");
 	int Result = MainProcess(strEditViewArg,DestNames[0],DestNames[1],StartLine,StartChar);
 
 	EmptyInternalClipboard();
