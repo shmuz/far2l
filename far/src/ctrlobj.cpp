@@ -70,18 +70,29 @@ ControlObject::ControlObject()
 {
 	_OT(SysLog(L"[%p] ControlObject::ControlObject()", this));
 	CtrlObject = this;
+fprintf(stderr, "ControlObject ctor 1\n");
 	HiFiles = new HighlightFiles;
+fprintf(stderr, "ControlObject ctor 2\n");
 	ViewerPosCache = new FilePositionCache(FPCK_VIEWER);
+fprintf(stderr, "ControlObject ctor 3\n");
 	EditorPosCache = new FilePositionCache(FPCK_EDITOR);
+fprintf(stderr, "ControlObject ctor 4\n");
 	FrameManager = new Manager;
+fprintf(stderr, "ControlObject ctor 5\n");
 	ApplyConfig();
+fprintf(stderr, "ControlObject ctor 6\n");
 	CmdHistory = new History(HISTORYTYPE_CMD, Opt.HistoryCount, "SavedHistory", &Opt.SaveHistory, false);
+fprintf(stderr, "ControlObject ctor 7\n");
 	FolderHistory = new History(HISTORYTYPE_FOLDER, Opt.FoldersHistoryCount, "SavedFolderHistory",
 			&Opt.SaveFoldersHistory, true);
+fprintf(stderr, "ControlObject ctor 8\n");
 	ViewHistory = new History(HISTORYTYPE_VIEW, Opt.ViewHistoryCount, "SavedViewHistory",
 			&Opt.SaveViewHistory, true);
+fprintf(stderr, "ControlObject ctor 9\n");
 	FolderHistory->SetAddMode(true, 2, true);
+fprintf(stderr, "ControlObject ctor 10\n");
 	ViewHistory->SetAddMode(true, 1, true);
+fprintf(stderr, "ControlObject ctor 11\n");
 }
 
 void ControlObject::Init()
