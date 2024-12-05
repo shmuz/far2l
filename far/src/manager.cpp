@@ -576,14 +576,18 @@ void Manager::EnterMainLoop()
 
 	for (;;)
 	{
+		fprintf(stderr, "EnterMainLoop() - 1\n");
 		Commit();
 
 		if (EndLoop || !HaveAnyFrame())
 		{
+		fprintf(stderr, "EnterMainLoop() - 2\n");
 			break;
 		}
 
+		fprintf(stderr, "EnterMainLoop() - 3\n");
 		ProcessMainLoop();
+		fprintf(stderr, "EnterMainLoop() - 4\n");
 	}
 }
 
@@ -596,36 +600,50 @@ void Manager::SetLastInputRecord(const INPUT_RECORD *Rec)
 
 void Manager::ProcessMainLoop()
 {
+	fprintf(stderr, "ProcessMainLoop() - 1\n");
 	if ( CurrentFrame )
 		CtrlObject->Macro.SetArea(CurrentFrame->GetMacroArea());
 
+	fprintf(stderr, "ProcessMainLoop() - 2\n");
 	DispatchInterThreadCalls();
 
+	fprintf(stderr, "ProcessMainLoop() - 3\n");
 	if ( CurrentFrame && !CurrentFrame->ProcessEvents() )
 	{
+	fprintf(stderr, "ProcessMainLoop() - 4\n");
 		ProcessKey(KEY_IDLE);
+	fprintf(stderr, "ProcessMainLoop() - 5\n");
 	}
 	else
 	{
+	fprintf(stderr, "ProcessMainLoop() - 6\n");
 		// Mantis#0000073: Не работает автоскролинг в QView
 		WaitInMainLoop=IsPanelsActive() && ((FilePanels*)CurrentFrame)->ActivePanel->GetType()!=QVIEW_PANEL;
 		//WaitInFastFind++;
+	fprintf(stderr, "ProcessMainLoop() - 7\n");
 		FarKey Key = GetInputRecord(&LastInputRecord);
 		//WaitInFastFind--;
+	fprintf(stderr, "ProcessMainLoop() - 8\n");
 		WaitInMainLoop=FALSE;
 
+	fprintf(stderr, "ProcessMainLoop() - 9\n");
 		if (EndLoop)
 			return;
 
+	fprintf(stderr, "ProcessMainLoop() - 10\n");
 		if (LastInputRecord.EventType==MOUSE_EVENT)
 		{
 				// используем копию структуры, т.к. LastInputRecord может внезапно измениться во время выполнения ProcessMouse
 				MOUSE_EVENT_RECORD mer=LastInputRecord.Event.MouseEvent;
 				ProcessMouse(&mer);
+	fprintf(stderr, "ProcessMainLoop() - 11\n");
 		}
-		else
+		else {
+	fprintf(stderr, "ProcessMainLoop() - 12\n");
 			ProcessKey(Key);
+		}
 	}
+	fprintf(stderr, "ProcessMainLoop() - 13\n");
 }
 
 static bool ConfirmExit(size_t vts_cnt)
