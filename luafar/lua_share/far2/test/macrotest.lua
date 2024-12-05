@@ -55,26 +55,26 @@ end
 local TmpFileName = far.InMyTemp("macrotest.tmp")
 
 local function WriteTmpFile(...)
-  io.stderr:write("function WriteTmpFile")
+  io.stderr:write("function WriteTmpFile\n")
   local fp = assert(io.open(TmpFileName,"w"))
   fp:write(...)
   fp:close()
 end
 
 local function DeleteTmpFile()
-  io.stderr:write("function DeleteTmpFile")
+  io.stderr:write("function DeleteTmpFile\n")
   win.DeleteFile(TmpFileName)
 end
 
 local function TestArea (area, k_before, k_after)
-  io.stderr:write("function TestArea")
+  io.stderr:write("function TestArea\n")
   if k_before then Keys(k_before) end
   assert(Area[area]==true and Area.Current==area)
   if k_after then Keys(k_after) end
 end
 
 function MT.test_areas()
-  io.stderr:write("function MT.test_areas")
+  io.stderr:write("function MT.test_areas\n")
   TestArea ("Shell")
   TestArea ("Grabber",    "AltIns",     "Esc")
   TestArea ("Shell",      "F12 0")
@@ -114,7 +114,7 @@ function MT.test_areas()
 end
 
 local function test_mf_akey()
-  io.stderr:write("function test_mf_akey")
+  io.stderr:write("function test_mf_akey\n")
   assert_eq(akey, mf.akey)
   local key,name = akey(0),akey(1)
   assert(key==far.NameToKey(MacroKey1) and name==MacroKey1 or
@@ -123,7 +123,7 @@ local function test_mf_akey()
 end
 
 local function test_bit64()
-  io.stderr:write("function test_bit64")
+  io.stderr:write("function test_bit64\n")
   for _,name in ipairs{"band","bnot","bor","bxor","lshift","rshift"} do
     assert_eq   (_G[name], bit64[name])
     assert_func (bit64[name])
@@ -167,7 +167,7 @@ local function test_bit64()
 end
 
 local function test_mf_eval()
-  io.stderr:write("function test_mf_eval")
+  io.stderr:write("function test_mf_eval\n")
   assert_eq(eval, mf.eval)
 
   -- test arguments validity checking
@@ -224,14 +224,14 @@ local function test_mf_eval()
 end
 
 local function test_mf_abs()
-  io.stderr:write("function test_mf_abs")
+  io.stderr:write("function test_mf_abs\n")
   assert_eq (mf.abs(1.3), 1.3)
   assert_eq (mf.abs(-1.3), 1.3)
   assert_eq (mf.abs(0), 0)
 end
 
 local function test_mf_acall()
-  io.stderr:write("function test_mf_acall")
+  io.stderr:write("function test_mf_acall\n")
   local a,b,c,d = mf.acall(function(p) return 3, nil, p, "foo" end, 77)
   assert_true (a==3 and b==nil and c==77 and d=="foo")
   assert_true (mf.acall(far.Show))
@@ -239,13 +239,13 @@ local function test_mf_acall()
 end
 
 local function test_mf_asc()
-  io.stderr:write("function test_mf_asc")
+  io.stderr:write("function test_mf_asc\n")
   assert_eq (mf.asc("0"), 48)
   assert_eq (mf.asc("Я"), 1071)
 end
 
 local function test_mf_atoi()
-  io.stderr:write("function test_mf_atoi")
+  io.stderr:write("function test_mf_atoi\n")
   for _,v in ipairs { "0", "-10", "0x11" } do
     assert_eq(mf.atoi(v), tonumber(v))
   end
@@ -261,13 +261,13 @@ local function test_mf_atoi()
 end
 
 local function test_mf_chr()
-  io.stderr:write("function test_mf_chr")
+  io.stderr:write("function test_mf_chr\n")
   assert_eq (mf.chr(48), "0")
   assert_eq (mf.chr(1071), "Я")
 end
 
 local function test_mf_clip()
-  io.stderr:write("function test_mf_clip")
+  io.stderr:write("function test_mf_clip\n")
   local oldval = far.PasteFromClipboard() -- store
 
   mf.clip(5,2) -- turn on the internal clipboard
@@ -303,7 +303,7 @@ local function test_mf_clip()
 end
 
 local function test_mf_env()
-  io.stderr:write("function test_mf_env")
+  io.stderr:write("function test_mf_env\n")
   mf.env("Foo",1,"Bar")
   assert_eq (mf.env("Foo"), "Bar")
   mf.env("Foo",1,"")
@@ -313,7 +313,7 @@ local function test_mf_env()
 end
 
 local function test_mf_fattr()
-  io.stderr:write("function test_mf_fattr")
+  io.stderr:write("function test_mf_fattr\n")
   DeleteTmpFile()
   assert_eq (mf.fattr(TmpFileName), -1)
   WriteTmpFile("")
@@ -323,7 +323,7 @@ local function test_mf_fattr()
 end
 
 local function test_mf_fexist()
-  io.stderr:write("function test_mf_fexist")
+  io.stderr:write("function test_mf_fexist\n")
   WriteTmpFile("")
   assert_true(mf.fexist(TmpFileName))
   DeleteTmpFile()
@@ -331,7 +331,7 @@ local function test_mf_fexist()
 end
 
 local function test_mf_msgbox()
-  io.stderr:write("function test_mf_msgbox")
+  io.stderr:write("function test_mf_msgbox\n")
   assert_eq (msgbox, mf.msgbox)
   mf.postmacro(function() Keys("Esc") end)
   assert_eq (0, msgbox("title","message"))
@@ -340,7 +340,7 @@ local function test_mf_msgbox()
 end
 
 local function test_mf_prompt()
-  io.stderr:write("function test_mf_prompt")
+  io.stderr:write("function test_mf_prompt\n")
   assert_eq (prompt, mf.prompt)
   mf.postmacro(Keys, "a b c Esc")
   assert_false (prompt())
@@ -349,13 +349,13 @@ local function test_mf_prompt()
 end
 
 local function test_mf_date()
-  io.stderr:write("function test_mf_date")
+  io.stderr:write("function test_mf_date\n")
   assert_str (mf.date())
   assert_str (mf.date("%a"))
 end
 
 local function test_mf_fmatch()
-  io.stderr:write("function test_mf_fmatch")
+  io.stderr:write("function test_mf_fmatch\n")
   assert_eq (mf.fmatch("Readme.txt", "*.txt"), 1)
   assert_eq (mf.fmatch("Readme.txt", "Readme.*|*.txt"), 0)
   assert_eq (mf.fmatch("/dir/Readme.txt", "/txt$/i"), 1)
@@ -363,7 +363,7 @@ local function test_mf_fmatch()
 end
 
 local function test_mf_fsplit()
-  io.stderr:write("function test_mf_fsplit")
+  io.stderr:write("function test_mf_fsplit\n")
   local bRoot = 0x01
   local bPath = 0x02
   local bName = 0x04
@@ -381,7 +381,7 @@ local function test_mf_fsplit()
 end
 
 local function test_mf_iif()
-  io.stderr:write("function test_mf_iif")
+  io.stderr:write("function test_mf_iif\n")
   assert_eq (mf.iif(true,  1, 2), 1)
   assert_eq (mf.iif("a",   1, 2), 1)
   assert_eq (mf.iif(100,   1, 2), 1)
@@ -392,7 +392,7 @@ local function test_mf_iif()
 end
 
 local function test_mf_index()
-  io.stderr:write("function test_mf_index")
+  io.stderr:write("function test_mf_index\n")
   assert_eq (mf.index("language","gua",0), 3)
   assert_eq (mf.index("language","gua",1), 3)
   assert_eq (mf.index("language","gUA",1), -1)
@@ -400,7 +400,7 @@ local function test_mf_index()
 end
 
 local function test_mf_int()
-  io.stderr:write("function test_mf_int")
+  io.stderr:write("function test_mf_int\n")
   assert_eq (mf.int("2.99"), 2)
   assert_eq (mf.int("-2.99"), -2)
   assert_eq (mf.int("0x10"), 0)
@@ -410,7 +410,7 @@ local function test_mf_int()
 end
 
 local function test_mf_itoa()
-  io.stderr:write("function test_mf_itoa")
+  io.stderr:write("function test_mf_itoa\n")
   assert_eq (mf.itoa(100),    "100")
   assert_eq (mf.itoa(100,10), "100")
   assert_eq (mf.itoa(100,2),  "1100100")
@@ -422,7 +422,7 @@ local function test_mf_itoa()
 end
 
 local function test_mf_key()
-  io.stderr:write("function test_mf_key")
+  io.stderr:write("function test_mf_key\n")
   local ref = {
     F.KEY_CTRL,         "Ctrl",
     F.KEY_ALT,          "Alt",
@@ -441,7 +441,7 @@ end
 
 -- Separate tests for mf.float and mf.string are locale-dependent, thus they are tested together.
 local function test_mf_float_and_string()
-  io.stderr:write("function test_mf_float_and_string")
+  io.stderr:write("function test_mf_float_and_string\n")
   local t = { 0, -0, 2.56e1, -5.37, -2.2e100, 2.2e-100 }
   for _,num in ipairs(t) do
     assert_eq (mf.float(mf.string(num)), num)
@@ -449,30 +449,30 @@ local function test_mf_float_and_string()
 end
 
 local function test_mf_lcase()
-  io.stderr:write("function test_mf_lcase")
+  io.stderr:write("function test_mf_lcase\n")
   assert_eq (mf.lcase("FOo БАр"), "foo бар")
 end
 
 local function test_mf_len()
-  io.stderr:write("function test_mf_len")
+  io.stderr:write("function test_mf_len\n")
   assert_eq (mf.len(""), 0)
   assert_eq (mf.len("FOo БАр"), 7)
 end
 
 local function test_mf_max()
-  io.stderr:write("function test_mf_max")
+  io.stderr:write("function test_mf_max\n")
   assert_eq (mf.max(-2,-5), -2)
   assert_eq (mf.max(2,5), 5)
 end
 
 local function test_mf_min()
-  io.stderr:write("function test_mf_min")
+  io.stderr:write("function test_mf_min\n")
   assert_eq (mf.min(-2,-5), -5)
   assert_eq (mf.min(2,5), 2)
 end
 
 local function test_mf_msave()
-  io.stderr:write("function test_mf_msave")
+  io.stderr:write("function test_mf_msave\n")
   local Key = "macrotest"
 
   -- test supported types, except tables
@@ -522,7 +522,7 @@ local function test_mf_msave()
 end
 
 local function test_mf_mod()
-  io.stderr:write("function test_mf_mod")
+  io.stderr:write("function test_mf_mod\n")
   assert_eq (mf.mod(11,4), 3)
   assert_eq (math.fmod(11,4), 3)
   assert_eq (11 % 4, 3)
@@ -533,7 +533,7 @@ local function test_mf_mod()
 end
 
 local function test_mf_replace()
-  io.stderr:write("function test_mf_replace")
+  io.stderr:write("function test_mf_replace\n")
   assert_eq (mf.replace("Foo Бар", "o", "1"), "F11 Бар")
   assert_eq (mf.replace("Foo Бар", "o", "1", 1), "F1o Бар")
   assert_eq (mf.replace("Foo Бар", "O", "1", 1, 1), "Foo Бар")
@@ -541,7 +541,7 @@ local function test_mf_replace()
 end
 
 local function test_mf_rindex()
-  io.stderr:write("function test_mf_rindex")
+  io.stderr:write("function test_mf_rindex\n")
   assert_eq (mf.rindex("language","a",0), 5)
   assert_eq (mf.rindex("language","a",1), 5)
   assert_eq (mf.rindex("language","A",1), -1)
@@ -549,7 +549,7 @@ local function test_mf_rindex()
 end
 
 local function test_mf_strpad()
-  io.stderr:write("function test_mf_strpad")
+  io.stderr:write("function test_mf_strpad\n")
   assert_eq (mf.strpad("Foo",10,"*",  2), '***Foo****')
   assert_eq (mf.strpad("",   10,"-*-",2), '-*--*--*--')
   assert_eq (mf.strpad("",   10,"-*-"), '-*--*--*--')
@@ -561,7 +561,7 @@ local function test_mf_strpad()
 end
 
 local function test_mf_strwrap()
-  io.stderr:write("function test_mf_strwrap")
+  io.stderr:write("function test_mf_strwrap\n")
   assert_eq (mf.strwrap("Пример строки, которая будет разбита на несколько строк по ширине в 7 символов.", 7,"\n"),
 [[
 Пример
@@ -581,7 +581,7 @@ local function test_mf_strwrap()
 end
 
 local function test_mf_substr()
-  io.stderr:write("function test_mf_substr")
+  io.stderr:write("function test_mf_substr\n")
   assert_eq (mf.substr("abcdef", 1), "bcdef")
   assert_eq (mf.substr("abcdef", 1, 3), "bcd")
   assert_eq (mf.substr("abcdef", 0, 4), "abcd")
@@ -596,14 +596,14 @@ local function test_mf_substr()
 end
 
 local function test_mf_testfolder()
-  io.stderr:write("function test_mf_testfolder")
+  io.stderr:write("function test_mf_testfolder\n")
   assert_range (mf.testfolder("."), 1, 2)          -- exists
   assert_eq    (mf.testfolder(far.GetMyHome()), 2) -- exists and not empty
   assert_range (mf.testfolder("@:\\"), -1, 0)      -- doesn't exist or access denied
 end
 
 local function test_mf_trim()
-  io.stderr:write("function test_mf_trim")
+  io.stderr:write("function test_mf_trim\n")
   assert_eq (mf.trim(" abc "), "abc")
   assert_eq (mf.trim(" abc ",0), "abc")
   assert_eq (mf.trim(" abc ",1), "abc ")
@@ -611,47 +611,47 @@ local function test_mf_trim()
 end
 
 local function test_mf_ucase()
-  io.stderr:write("function test_mf_ucase")
+  io.stderr:write("function test_mf_ucase\n")
   assert_eq (mf.ucase("FOo БАр"), "FOO БАР")
 end
 
 local function test_mf_waitkey()
-  io.stderr:write("function test_mf_waitkey")
+  io.stderr:write("function test_mf_waitkey\n")
   assert_eq (mf.waitkey(50,0), "")
   assert_eq (mf.waitkey(50,1), F.KEY_INVALID)
 end
 
 local function test_mf_size2str()
-  io.stderr:write("function test_mf_size2str")
+  io.stderr:write("function test_mf_size2str\n")
   assert_eq (mf.size2str(123,0,5), "  123")
   assert_eq (mf.size2str(123,0,-5), "123  ")
 end
 
 local function test_mf_xlat()
-  io.stderr:write("function test_mf_xlat")
+  io.stderr:write("function test_mf_xlat\n")
   assert_str (mf.xlat("abc"))
   assert_eq (mf.xlat("ghzybr"), "пряник")
   assert_eq (mf.xlat("сщьзгеук"), "computer")
 end
 
 local function test_mf_beep()
-  io.stderr:write("function test_mf_beep")
+  io.stderr:write("function test_mf_beep\n")
   assert_bool (mf.beep())
 end
 
 local function test_mf_flock()
-  io.stderr:write("function test_mf_flock")
+  io.stderr:write("function test_mf_flock\n")
   for k=0,2 do assert_num (mf.flock(k,-1)) end
 end
 
 local function test_mf_GetMacroCopy()
-  io.stderr:write("function test_mf_GetMacroCopy")
+  io.stderr:write("function test_mf_GetMacroCopy\n")
   assert_table (mf.GetMacroCopy(1))
   assert_nil   (mf.GetMacroCopy(1e9))
 end
 
 local function test_mf_Keys()
-  io.stderr:write("function test_mf_Keys")
+  io.stderr:write("function test_mf_Keys\n")
   assert_eq (Keys, mf.Keys)
   Keys("Esc F a r Space M a n a g e r Space Ф А Р")
   assert_eq (panel.GetCmdLine(), "Far Manager ФАР")
@@ -660,7 +660,7 @@ local function test_mf_Keys()
 end
 
 local function test_mf_exit()
-  io.stderr:write("function test_mf_exit")
+  io.stderr:write("function test_mf_exit\n")
   assert_eq (exit, mf.exit)
   local N
   mf.postmacro(
@@ -674,13 +674,13 @@ local function test_mf_exit()
 end
 
 local function test_mf_mmode()
-  io.stderr:write("function test_mf_mmode")
+  io.stderr:write("function test_mf_mmode\n")
   assert_eq (mmode, mf.mmode)
   assert_eq (1, mmode(1,-1))
 end
 
 local function test_mf_print()
-  io.stderr:write("function test_mf_print")
+  io.stderr:write("function test_mf_print\n")
   assert_eq (print, mf.print)
   assert_func (print)
   -- test on command line
@@ -707,23 +707,23 @@ local function test_mf_print()
 end
 
 local function test_mf_postmacro()
-  io.stderr:write("function test_mf_postmacro")
+  io.stderr:write("function test_mf_postmacro\n")
   assert_func (mf.postmacro)
 end
 
 local function test_mf_sleep()
-  io.stderr:write("function test_mf_sleep")
+  io.stderr:write("function test_mf_sleep\n")
   assert_func (mf.sleep)
 end
 
 local function test_mf_usermenu()
-  io.stderr:write("function test_mf_usermenu")
+  io.stderr:write("function test_mf_usermenu\n")
   mf.usermenu()
   TestArea("UserMenu",nil,"Esc")
 end
 
 local function test_mf_EnumScripts()
-  io.stderr:write("function test_mf_EnumScripts")
+  io.stderr:write("function test_mf_EnumScripts\n")
   local f = assert_func(mf.EnumScripts("Macro"))
   local s,i = f()
   assert_table(s)
@@ -731,7 +731,7 @@ local function test_mf_EnumScripts()
 end
 
 function MT.test_mf()
-  io.stderr:write("function MT.test_mf")
+  io.stderr:write("function MT.test_mf\n")
   test_mf_abs()
   test_mf_acall()
   test_mf_akey()
@@ -785,7 +785,7 @@ function MT.test_mf()
 end
 
 function MT.test_CmdLine()
-  io.stderr:write("function MT.test_CmdLine")
+  io.stderr:write("function MT.test_CmdLine\n")
   Keys"Esc f o o Space Б а р"
   assert_false(CmdLine.Bof)
   assert_true(CmdLine.Eof)
@@ -823,7 +823,7 @@ function MT.test_CmdLine()
 end
 
 local function test_Far_GetConfig()
-  io.stderr:write("function test_Far_GetConfig")
+  io.stderr:write("function test_Far_GetConfig\n")
   local options = {
     "Cmdline.AutoComplete",
     "Cmdline.DelRemovesBlocks",
@@ -1115,7 +1115,7 @@ local function test_Far_GetConfig()
 end
 
 function MT.test_Far()
-  io.stderr:write("function MT.test_Far")
+  io.stderr:write("function MT.test_Far\n")
   assert_bool (Far.FullScreen)
   assert_num (Far.Height)
   assert_bool (Far.IsUserAdmin)
@@ -1145,7 +1145,7 @@ function MT.test_Far()
 end
 
 local function test_CheckAndGetHotKey()
-  io.stderr:write("function test_CheckAndGetHotKey")
+  io.stderr:write("function test_CheckAndGetHotKey\n")
   mf.acall(far.Menu, {Flags="FMENU_AUTOHIGHLIGHT"},
     {{text="abcd"},{text="abc&d"},{text="abcd"},{text="abcd"},{text="abcd"}})
 
@@ -1173,7 +1173,7 @@ local function test_CheckAndGetHotKey()
 end
 
 function MT.test_Menu()
-  io.stderr:write("function MT.test_Menu")
+  io.stderr:write("function MT.test_Menu\n")
   Keys("F11")
   assert_str(Menu.Value)
   assert_eq (Menu.Value, Menu.GetValue())
@@ -1198,7 +1198,7 @@ function MT.test_Menu()
 end
 
 function MT.test_Object()
-  io.stderr:write("function MT.test_Object")
+  io.stderr:write("function MT.test_Object\n")
   assert_bool (Object.Bof)
   assert_num (Object.CurPos)
   assert_bool (Object.Empty)
@@ -1213,7 +1213,7 @@ function MT.test_Object()
 end
 
 function MT.test_Drv()
-  io.stderr:write("function MT.test_Drv")
+  io.stderr:write("function MT.test_Drv\n")
   Keys"AltF1"
   assert_num (Drv.ShowMode)
   assert_eq (Drv.ShowPos, 1)
@@ -1224,7 +1224,7 @@ function MT.test_Drv()
 end
 
 function MT.test_Help()
-  io.stderr:write("function MT.test_Help")
+  io.stderr:write("function MT.test_Help\n")
   Keys"F1"
   assert_str (Help.FileName)
   assert_str (Help.SelTopic)
@@ -1233,7 +1233,7 @@ function MT.test_Help()
 end
 
 function MT.test_Mouse()
-  io.stderr:write("function MT.test_Mouse")
+  io.stderr:write("function MT.test_Mouse\n")
   assert_num (Mouse.X)
   assert_num (Mouse.Y)
   assert_num (Mouse.Button)
@@ -1243,7 +1243,7 @@ function MT.test_Mouse()
 end
 
 local function test_XPanel(pan) -- (@pan: either APanel or PPanel)
-  io.stderr:write("function test_XPanel")
+  io.stderr:write("function test_XPanel\n")
   assert_bool (pan.Bof)
   assert_num  (pan.ColumnCount)
   assert_num  (pan.CurPos)
@@ -1282,7 +1282,7 @@ MT.test_APanel = function() test_XPanel(APanel) end
 MT.test_PPanel = function() test_XPanel(PPanel) end
 
 local function test_Panel_Item()
-  io.stderr:write("function test_Panel_Item")
+  io.stderr:write("function test_Panel_Item\n")
   local index = 0 -- 0 is the current element, otherwise element index
   for pan=0,1 do
     assert_str    (Panel.Item(pan,index,0))  -- file name
@@ -1311,7 +1311,7 @@ local function test_Panel_Item()
 end
 
 local function test_Panel_SetPath()
-  io.stderr:write("function test_Panel_SetPath")
+  io.stderr:write("function test_Panel_SetPath\n")
   -- store
   local adir_old = panel.GetPanelDirectory(nil,1).Name
   local pdir_old = panel.GetPanelDirectory(nil,0).Name
@@ -1332,7 +1332,7 @@ end
 
 -- N=Panel.Select(panelType,Action[,Mode[,Items]])
 local function Test_Panel_Select(pan)
-  io.stderr:write("function Test_Panel_Select")
+  io.stderr:write("function Test_Panel_Select\n")
   local adir_old = panel.GetPanelDirectory(nil,pan).Name -- store panel directory
 
   local PS = assert_func(Panel.Select)
@@ -1434,7 +1434,7 @@ local function Test_Panel_Select(pan)
 end
 
 function MT.test_Panel()
-  io.stderr:write("function MT.test_Panel")
+  io.stderr:write("function MT.test_Panel\n")
   test_Panel_Item()
 
   assert_eq (Panel.FAttr(0,":"), -1)
@@ -1451,7 +1451,7 @@ function MT.test_Panel()
 end
 
 function MT.test_Dlg()
-  io.stderr:write("function MT.test_Dlg")
+  io.stderr:write("function MT.test_Dlg\n")
   Keys"F7 a b c"
   assert_true(Area.Dialog)
   assert_str(Dlg.Id)
@@ -1480,7 +1480,7 @@ function MT.test_Dlg()
 end
 
 function MT.test_Plugin()
-  io.stderr:write("function MT.test_Plugin")
+  io.stderr:write("function MT.test_Plugin\n")
   -- Plugin.Menu
   assert_false(Plugin.Menu())
   assert_true(Plugin.Menu(luamacroId, "EF6D67A2-59F7-4DF3-952E-F9049877B492")) -- call macrobrowser
@@ -1526,7 +1526,7 @@ function MT.test_Plugin()
 end
 
 local function test_far_MacroExecute()
-  io.stderr:write("function test_far_MacroExecute")
+  io.stderr:write("function test_far_MacroExecute\n")
   local function test(code, flags)
     local t = far.MacroExecute(code, flags,
       "foo",
@@ -1550,7 +1550,7 @@ local function test_far_MacroExecute()
 end
 
 local function test_far_MacroAdd()
-  io.stderr:write("function test_far_MacroAdd")
+  io.stderr:write("function test_far_MacroAdd\n")
   local area, key, descr = "MACROAREA_SHELL", "CtrlA", "Test MacroAdd"
 
   local Id = far.MacroAdd(area, nil, key, [[A = { b=5 }]], descr)
@@ -1596,7 +1596,7 @@ local function test_far_MacroAdd()
 end
 
 local function test_far_MacroCheck()
-  io.stderr:write("function test_far_MacroCheck")
+  io.stderr:write("function test_far_MacroCheck\n")
   assert_true(far.MacroCheck([[A = { b=5 }]]))
   assert_true(far.MacroCheck([[A = { b=5 }]], "KMFLAGS_LUA"))
 
@@ -1621,12 +1621,12 @@ local function test_far_MacroCheck()
 end
 
 local function test_far_MacroGetArea()
-  io.stderr:write("function test_far_MacroGetArea")
+  io.stderr:write("function test_far_MacroGetArea\n")
   assert_eq(far.MacroGetArea(), F.MACROAREA_SHELL)
 end
 
 local function test_far_MacroGetLastError()
-  io.stderr:write("function test_far_MacroGetLastError")
+  io.stderr:write("function test_far_MacroGetLastError\n")
   assert_true  (far.MacroCheck("a=1"))
   assert_eq    (far.MacroGetLastError().ErrSrc, "")
   assert_false (far.MacroCheck("a=", "KMFLAGS_SILENTCHECK"))
@@ -1634,13 +1634,13 @@ local function test_far_MacroGetLastError()
 end
 
 local function test_far_MacroGetState()
-  io.stderr:write("function test_far_MacroGetState")
+  io.stderr:write("function test_far_MacroGetState\n")
   local st = far.MacroGetState()
   assert(st==F.MACROSTATE_EXECUTING or st==F.MACROSTATE_EXECUTING_COMMON)
 end
 
 local function test_MacroControl()
-  io.stderr:write("function test_MacroControl")
+  io.stderr:write("function test_MacroControl\n")
   test_far_MacroAdd()
   test_far_MacroCheck()
   test_far_MacroExecute()
@@ -1650,7 +1650,7 @@ local function test_MacroControl()
 end
 
 local function test_RegexControl()
-  io.stderr:write("function test_RegexControl")
+  io.stderr:write("function test_RegexControl\n")
   local L = win.Utf8ToUtf32
   local pat = "([bc]+)"
   local pat2 = "([bc]+)|(zz)"
@@ -1755,7 +1755,7 @@ Description:
   ложные события не приходят.
 --]]------------------------------------------------------------------------------------------------
 function MT.test_mantis_1722()
-  io.stderr:write("function MT.test_mantis_1722")
+  io.stderr:write("function MT.test_mantis_1722\n")
   local check = 0
   local function DlgProc (hDlg, msg, p1, p2)
     if msg == F.DN_EDITCHANGE then
@@ -1772,14 +1772,14 @@ function MT.test_mantis_1722()
 end
 
 local function test_utf8_len()
-  io.stderr:write("function test_utf8_len")
+  io.stderr:write("function test_utf8_len\n")
   assert_eq ((""):len(), 0)
   assert_eq (("FOo БАр"):len(), 7)
   assert_nil (("\239"):len()) -- invalid UTF-8
 end
 
 local function test_utf8_sub()
-  io.stderr:write("function test_utf8_sub")
+  io.stderr:write("function test_utf8_sub\n")
   local text = "abcdабвг"
   local len = assert(text:len()==8) and 8
 
@@ -1827,7 +1827,7 @@ local function test_utf8_sub()
 end
 
 local function test_utf8_lower_upper()
-  io.stderr:write("function test_utf8_lower_upper")
+  io.stderr:write("function test_utf8_lower_upper\n")
   assert_eq ((""):lower(), "")
   assert_eq (("abc"):lower(), "abc")
   assert_eq (("ABC"):lower(), "abc")
@@ -1852,7 +1852,7 @@ end
 -- ACTL_GETWINDOWCOUNT, ACTL_GETWINDOWTYPE, ACTL_GETWINDOWINFO, ACTL_SETCURRENTWINDOW, ACTL_COMMIT
 ---------------------------------------------------------------------------------------------------
 local function test_AdvControl_Window()
-  io.stderr:write("function test_AdvControl_Window")
+  io.stderr:write("function test_AdvControl_Window\n")
   local num, t
 
   num = far.AdvControl("ACTL_GETWINDOWCOUNT")
@@ -1891,7 +1891,7 @@ local function test_AdvControl_Window()
 end
 
 local function test_AdvControl_Colors()
-  io.stderr:write("function test_AdvControl_Colors")
+  io.stderr:write("function test_AdvControl_Colors\n")
   local allcolors = assert_table(far.AdvControl("ACTL_GETARRAYCOLOR"))
   assert_eq(#allcolors, 147)
   for i,color in ipairs(allcolors) do
@@ -1913,7 +1913,7 @@ local function test_AdvControl_Colors()
 end
 
 local function test_AdvControl_Misc()
-  io.stderr:write("function test_AdvControl_Misc")
+  io.stderr:write("function test_AdvControl_Misc\n")
   local t
 
   assert_eq (far.AdvControl("ACTL_GETFARVERSION"):sub(1,1), "2")
@@ -1941,7 +1941,7 @@ local function test_AdvControl_Misc()
 end
 
 local function test_ACTL()
-  io.stderr:write("function test_ACTL")
+  io.stderr:write("function test_ACTL\n")
   assert_func  ( actl.Commit)
   assert_table ( actl.GetArrayColor())
   assert_range ( #actl.GetArrayColor(),142,152)
@@ -1971,7 +1971,7 @@ local function test_ACTL()
 end
 
 local function test_AdvControl()
-  io.stderr:write("function test_AdvControl")
+  io.stderr:write("function test_AdvControl\n")
 --test_AdvControl_Window()
   test_AdvControl_Colors()
   test_AdvControl_Misc()
@@ -1979,12 +1979,12 @@ local function test_AdvControl()
 end
 
 local function test_far_GetMsg()
-  io.stderr:write("function test_far_GetMsg")
+  io.stderr:write("function test_far_GetMsg\n")
   assert_str (far.GetMsg(0))
 end
 
 local function test_clipboard()
-  io.stderr:write("function test_clipboard")
+  io.stderr:write("function test_clipboard\n")
   local orig = far.PasteFromClipboard()
   local values = { "Человек", "foo", "", n=3 }
   for k=1,values.n do
@@ -1999,7 +1999,7 @@ local function test_clipboard()
 end
 
 local function test_ProcessName()
-  io.stderr:write("function test_ProcessName")
+  io.stderr:write("function test_ProcessName\n")
   assert_true  (far.CheckMask("f*.ex?"))
   assert_true  (far.CheckMask("/(abc)?def/"))
   assert_false (far.CheckMask("/[[[/"))
@@ -2061,7 +2061,7 @@ local function test_ProcessName()
 end
 
 local function test_FarStandardFunctions()
-  io.stderr:write("function test_FarStandardFunctions")
+  io.stderr:write("function test_FarStandardFunctions\n")
   test_clipboard()
 
   test_ProcessName()
@@ -2144,7 +2144,7 @@ end
 
 -- "Several lines are merged into one".
 local function test_issue_3129()
-  io.stderr:write("function test_issue_3129")
+  io.stderr:write("function test_issue_3129\n")
   local fname = far.InMyTemp("far2m-"..win.Uuid("L"):sub(1,8))
   local fp = assert(io.open(fname, "w"))
   fp:close()
@@ -2169,7 +2169,7 @@ local function test_issue_3129()
 end
 
 local function test_gmatch_coro()
-  io.stderr:write("function test_gmatch_coro")
+  io.stderr:write("function test_gmatch_coro\n")
   local function yieldFirst(it)
     return coroutine.wrap(function()
       coroutine.yield(it())
@@ -2182,7 +2182,7 @@ local function test_gmatch_coro()
 end
 
 local function test_PluginsControl()
-  io.stderr:write("function test_PluginsControl")
+  io.stderr:write("function test_PluginsControl\n")
   local mod = assert(far.PluginStartupInfo().ModuleName)
   local hnd1 = assert_udata(far.FindPlugin("PFM_MODULENAME", mod))
   local hnd2 = assert_udata(far.FindPlugin("PFM_SYSID", luamacroId))
@@ -2232,7 +2232,7 @@ local function test_PluginsControl()
 end
 
 local function test_far_timer()
-  io.stderr:write("function test_far_timer")
+  io.stderr:write("function test_far_timer\n")
   local N = 0
   local timer = far.Timer(50, function(hnd)
       N = N+1
@@ -2243,7 +2243,7 @@ local function test_far_timer()
 end
 
 local function test_win_functions()
-  io.stderr:write("function test_win_functions")
+  io.stderr:write("function test_win_functions\n")
   assert_func( win.CopyFile)
   assert_func( win.CreateDir)
   assert_func( win.DeleteFile)
@@ -2276,7 +2276,7 @@ local function test_win_functions()
 end
 
 local function test_win_Clock()
-  io.stderr:write("function test_win_Clock")
+  io.stderr:write("function test_win_Clock\n")
   -- check time difference
   local temp = win.Clock()
   win.Sleep(500)
@@ -2294,14 +2294,14 @@ local function test_win_Clock()
 end
 
 local function test_win_CompareString()
-  io.stderr:write("function test_win_CompareString")
+  io.stderr:write("function test_win_CompareString\n")
   assert(win.CompareString("a","b") < 0)
   assert(win.CompareString("b","a") > 0)
   assert(win.CompareString("b","b") == 0)
 end
 
 local function test_win_ExpandEnv()
-  io.stderr:write("function test_win_ExpandEnv")
+  io.stderr:write("function test_win_ExpandEnv\n")
   local s1 = "$(HOME)/abc"
   local s2 = win.ExpandEnv(s1)
   assert_neq(s1, s2)
@@ -2315,7 +2315,7 @@ local function test_win_ExpandEnv()
 end
 
 local function test_win_Uuid()
-  io.stderr:write("function test_win_Uuid")
+  io.stderr:write("function test_win_Uuid\n")
   local uuid = win.Uuid()
   assert_eq(#uuid, 16)
   assert_neq(uuid, ("\0"):rep(16))
@@ -2334,7 +2334,7 @@ local function test_win_Uuid()
 end
 
 local function test_win()
-  io.stderr:write("function test_win")
+  io.stderr:write("function test_win\n")
   test_win_functions()
 
   test_win_Clock()
@@ -2358,14 +2358,14 @@ local function test_win()
 end
 
 local function test_utf8()
-  io.stderr:write("function test_utf8")
+  io.stderr:write("function test_utf8\n")
   test_utf8_len()
   test_utf8_sub()
   test_utf8_lower_upper()
 end
 
 local function test_dialog_1()
-  io.stderr:write("function test_dialog_1")
+  io.stderr:write("function test_dialog_1\n")
   local sd = require"far2.simpledialog"
   local tt = {"foo","bar","baz"}
 
@@ -2408,7 +2408,7 @@ local function test_dialog_1()
 end
 
 local function test_dialog_issue_28()
-  io.stderr:write("function test_dialog_issue_28")
+  io.stderr:write("function test_dialog_issue_28\n")
   local sd=require "far2.simpledialog"
   local checkValue = nil
   local items = {
@@ -2434,13 +2434,13 @@ local function test_dialog_issue_28()
 end
 
 local function test_dialog()
-  io.stderr:write("function test_dialog")
+  io.stderr:write("function test_dialog\n")
   test_dialog_1()
   test_dialog_issue_28()
 end
 
 local function test_one_guid(val, func, keys, numEsc)
-  io.stderr:write("function test_one_guid")
+  io.stderr:write("function test_one_guid\n")
   numEsc = numEsc or 1
   val = far.Guids[val]
   assert_str(val)
@@ -2454,7 +2454,7 @@ local function test_one_guid(val, func, keys, numEsc)
 end
 
 local function test_Guids()
-  io.stderr:write("function test_Guids")
+  io.stderr:write("function test_Guids\n")
   assert(0 ~= Far.GetConfig("Confirmations.Delete"), "Confirmations.Delete must be set")
   assert(0 ~= Far.GetConfig("Confirmations.DeleteFolder"), "Confirmations.DeleteFolder must be set")
 
@@ -2587,7 +2587,7 @@ local function test_Guids()
 end
 
 local function test_far_Menu()
-  io.stderr:write("function test_far_Menu")
+  io.stderr:write("function test_far_Menu\n")
   local items = {
     { text="line1" }, { text="line2" },
   }
@@ -2611,7 +2611,7 @@ local function test_far_Menu()
 end
 
 local function test_SplitCmdLine()
-  io.stderr:write("function test_SplitCmdLine")
+  io.stderr:write("function test_SplitCmdLine\n")
   local a,b,c,d
 
   a,b,c,d = far.SplitCmdLine("ab cd ef gh")
@@ -2631,7 +2631,7 @@ local function test_SplitCmdLine()
 end
 
 function MT.test_luafar()
-  io.stderr:write("function MT.test_luafar")
+  io.stderr:write("function MT.test_luafar\n")
   test_bit64()
   test_utf8()
   test_win()
@@ -2656,7 +2656,7 @@ end
 -- Test in particular that Plugin.Call (a so-called "restricted" function) works properly
 -- from inside a deeply nested coroutine.
 function MT.test_coroutine()
-  io.stderr:write("function MT.test_coroutine")
+  io.stderr:write("function MT.test_coroutine\n")
   for k=1,2 do
     local Call = k==1 and Plugin.Call or Plugin.SyncCall
     local function f1()
@@ -2672,14 +2672,14 @@ function MT.test_coroutine()
 end
 
 function MT.test_far_regex(printfunc, verbose)
-  io.stderr:write("function MT.test_far_regex")
+  io.stderr:write("function MT.test_far_regex\n")
   local test = require "far2.test.regex.runtest"
   local numerr = test(printfunc, verbose)
   assert_eq (numerr, 0)
 end
 
 function MT.test_far_DetectCodePage()
-  io.stderr:write("function MT.test_far_DetectCodePage")
+  io.stderr:write("function MT.test_far_DetectCodePage\n")
   local test = require "far2.test.codepage.test_codepage"
   local dir = os.getenv("FARHOME").."/Plugins/luafar/lua_share/far2/test/codepage"
   local pass, total = test(dir)
@@ -2689,7 +2689,7 @@ function MT.test_far_DetectCodePage()
 end
 
 function MT.test_UserDefinedList()
-  io.stderr:write("function MT.test_UserDefinedList")
+  io.stderr:write("function MT.test_UserDefinedList\n")
   local ADDASTERISK      = 0x001
   local PACKASTERISKS    = 0x002
   local PROCESSBRACKETS  = 0x004
@@ -2747,54 +2747,54 @@ function MT.test_UserDefinedList()
 end
 
 function MT.test_all()
-  io.stderr:write("function MT.test_all")
-  io.stderr:write("TEST 0\n")
+  io.stderr:write("function MT.test_all\n")
+  io.stderr:write("TEST 0\n\n")
   assert(Area.Shell, "Run these tests from the Shell area.")
   assert(not APanel.Plugin and not PPanel.Plugin, "Run these tests when neither of panels is a plugin panel.")
 
-  io.stderr:write("TEST 1\n")
+  io.stderr:write("TEST 1\n\n")
   MT.test_areas()
-  io.stderr:write("TEST 2\n")
+  io.stderr:write("TEST 2\n\n")
   MT.test_mf()
-  io.stderr:write("TEST 3\n")
+  io.stderr:write("TEST 3\n\n")
   MT.test_CmdLine()
-  io.stderr:write("TEST 4\n")
+  io.stderr:write("TEST 4\n\n")
   MT.test_Help()
-  io.stderr:write("TEST 5\n")
+  io.stderr:write("TEST 5\n\n")
   MT.test_Dlg()
-  io.stderr:write("TEST 6\n")
+  io.stderr:write("TEST 6\n\n")
   MT.test_Drv()
-  io.stderr:write("TEST 7\n")
+  io.stderr:write("TEST 7\n\n")
   MT.test_Far()
-  io.stderr:write("TEST 8\n")
+  io.stderr:write("TEST 8\n\n")
   MT.test_Menu()
-  io.stderr:write("TEST 9\n")
+  io.stderr:write("TEST 9\n\n")
   MT.test_Mouse()
-  io.stderr:write("TEST 10\n")
+  io.stderr:write("TEST 10\n\n")
   MT.test_Object()
-  io.stderr:write("TEST 11\n")
+  io.stderr:write("TEST 11\n\n")
   MT.test_Panel()
-  io.stderr:write("TEST 12\n")
+  io.stderr:write("TEST 12\n\n")
   MT.test_Plugin()
-  io.stderr:write("TEST 13\n")
+  io.stderr:write("TEST 13\n\n")
   MT.test_APanel()
-  io.stderr:write("TEST 14\n")
+  io.stderr:write("TEST 14\n\n")
   MT.test_PPanel()
-  io.stderr:write("TEST 15\n")
+  io.stderr:write("TEST 15\n\n")
   MT.test_mantis_1722()
-  io.stderr:write("TEST 16\n")
+  io.stderr:write("TEST 16\n\n")
   MT.test_luafar()
-  io.stderr:write("TEST 17\n")
+  io.stderr:write("TEST 17\n\n")
   MT.test_coroutine()
-  io.stderr:write("TEST 18\n")
+  io.stderr:write("TEST 18\n\n")
   MT.test_UserDefinedList()
-  io.stderr:write("TEST 19\n")
+  io.stderr:write("TEST 19\n\n")
   MT.test_far_regex( --[[far.Log, true]] ) -- external test files
-  io.stderr:write("TEST 20\n")
+  io.stderr:write("TEST 20\n\n")
   MT.test_far_DetectCodePage() -- external
-  io.stderr:write("TEST 21\n")
+  io.stderr:write("TEST 21\n\n")
   actl.RedrawAll()
-  io.stderr:write("TEST 22\n")
+  io.stderr:write("TEST 22\n\n")
 end
 
 return MT
