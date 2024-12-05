@@ -787,6 +787,7 @@ fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 4-2\n");
 fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 4-3\n");
 			while (_ae.palette) {
 fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 4-4\n");
+break;
 				_async_cond.wait(lock);
 			}
 		}
