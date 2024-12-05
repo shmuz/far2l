@@ -760,7 +760,9 @@ void TTYBackend::OnConsoleAdhocQuickEdit()
 
 DWORD64 TTYBackend::OnConsoleSetTweaks(DWORD64 tweaks)
 {
+fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 1\n");
 	if (tweaks != TWEAKS_ONLY_QUERY_SUPPORTED) {
+fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 2\n");
 		const auto prev_osc52clip_set = _osc52clip_set;
 		_osc52clip_set = (tweaks & CONSOLE_OSC52CLIP_SET) != 0;
 
@@ -768,11 +770,13 @@ DWORD64 TTYBackend::OnConsoleSetTweaks(DWORD64 tweaks)
 			ChooseSimpleClipboardBackend();
 		}
 
+fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 3\n");
 		bool override_default_palette = (tweaks & CONSOLE_TTY_PALETTE_OVERRIDE) != 0;
 		{
 			std::lock_guard<std::mutex> lock(_palette_mtx);
 			std::swap(override_default_palette, _override_default_palette);
 		}
+fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 4\n");
 
 		if (override_default_palette != ((tweaks & CONSOLE_TTY_PALETTE_OVERRIDE) != 0)) {
 			std::unique_lock<std::mutex> lock(_async_mutex);
@@ -783,6 +787,7 @@ DWORD64 TTYBackend::OnConsoleSetTweaks(DWORD64 tweaks)
 			}
 		}
 	}
+fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 5\n");
 
 
 	DWORD64 out = TWEAK_STATUS_SUPPORT_TTY_PALETTE;
@@ -790,6 +795,7 @@ DWORD64 TTYBackend::OnConsoleSetTweaks(DWORD64 tweaks)
 	if (!_far2l_tty && !_ttyx) {
 		out|= TWEAK_STATUS_SUPPORT_OSC52CLIP_SET;
 	}
+fprintf(stderr, "TTYBackend::OnConsoleSetTweaks - 6\n");
 
 	return out;
 }
