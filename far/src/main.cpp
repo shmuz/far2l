@@ -360,6 +360,8 @@ static unsigned int gMainThreadID;
 
 int FarAppMain(int argc, char **argv)
 {
+	exit(10);
+
 	// avoid killing process due to broker terminated unexpectedly
 	signal(SIGPIPE, SIG_IGN);
 
