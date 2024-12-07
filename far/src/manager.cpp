@@ -671,6 +671,7 @@ static bool ConfirmExit(size_t vts_cnt)
 
 void Manager::ExitMainLoop(bool Ask, int ExitCode)
 {
+fprintf(stderr, "Manager::ExitMainLoop - 1\n");
 	if (CloseFAR)
 	{
 		CloseFAR=FALSE;
@@ -680,6 +681,7 @@ void Manager::ExitMainLoop(bool Ask, int ExitCode)
 	bool Exiting = true;
 	if (Ask)
 	{
+fprintf(stderr, "Manager::ExitMainLoop - 2\n");
 		size_t vts_cnt = VTShell_Count();
 		if (Opt.Confirm.ExitEffective() || vts_cnt)
 			Exiting = ConfirmExit(vts_cnt);
@@ -689,12 +691,14 @@ void Manager::ExitMainLoop(bool Ask, int ExitCode)
 
 	if (Exiting)
 	{
+fprintf(stderr, "Manager::ExitMainLoop - 3\n");
 		/* $ 29.12.2000 IS
 		   + Проверяем, сохранены ли все измененные файлы. Если нет, то не выходим
 		     из фара.
 		*/
 		if (ExitAll())
 		{
+fprintf(stderr, "Manager::ExitMainLoop - 4\n");
 			FarExitCode = ExitCode;
 
 			//TODO: при закрытии по x нужно делать форсированный выход. Иначе могут быть
@@ -704,11 +708,13 @@ void Manager::ExitMainLoop(bool Ask, int ExitCode)
 			if (!cp || (!cp->LeftPanel->ProcessPluginEvent(FE_CLOSE,nullptr) &&
 			            !cp->RightPanel->ProcessPluginEvent(FE_CLOSE,nullptr)))
 			{
+fprintf(stderr, "Manager::ExitMainLoop - 5\n");
 				EndLoop=true;
 			}
 		}
 		else
 		{
+fprintf(stderr, "Manager::ExitMainLoop - 6\n");
 			CloseFARMenu=FALSE;
 		}
 	}
