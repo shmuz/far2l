@@ -81,16 +81,23 @@ InterThreadCallsDispatcherThread::InterThreadCallsDispatcherThread()
 
 InterThreadCallsDispatcherThread::~InterThreadCallsDispatcherThread()
 {
+fprintf(stderr, "~InterThreadCallsDispatcherThread - 1\n");
 	ASSERT(IsCurrentThreadDispatchesInterThreadCalls());
+fprintf(stderr, "~InterThreadCallsDispatcherThread - 2\n");
 	InterThreadCallDelegates interlocked_delegates;
+fprintf(stderr, "~InterThreadCallsDispatcherThread - 3\n");
 	{
+fprintf(stderr, "~InterThreadCallsDispatcherThread - 4\n");
 		std::lock_guard<std::mutex> lock(s_inter_thread_call_synch.mtx);
 		s_interlocked_delegates_tid = 0;
 		interlocked_delegates.swap(s_interlocked_delegates);
+fprintf(stderr, "~InterThreadCallsDispatcherThread - 5\n");
 	}
 	for (const auto &d : interlocked_delegates) {
+fprintf(stderr, "~InterThreadCallsDispatcherThread - 6\n");
 		try {
 			d->Finalize(true);
+fprintf(stderr, "~InterThreadCallsDispatcherThread - 7\n");
 		} catch (std::exception &e) {
 			fprintf(stderr, "%s - Finalize: %s\n", __FUNCTION__, e.what());
 		}
