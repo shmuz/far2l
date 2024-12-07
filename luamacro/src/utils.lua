@@ -1207,6 +1207,7 @@ end
 
 
 local function EnumScripts (ScriptType)
+  io.stderr:write("EnumScripts - entered\n")
   local ScriptOrigin = {
     CustomSortModes = Shared.panelsort and Shared.panelsort.GetCustomSortModes(),
     Event = LoadedMacros,
@@ -1238,6 +1239,7 @@ local function EnumScripts (ScriptType)
   end
 
   local origin = ScriptOrigin[ScriptType]
+  io.stderr:write("EnumScripts - origin: ", tostring(origin), "\n")
   if not origin then
     error("Wrong argument: " .. tostring(ScriptType))
   end
