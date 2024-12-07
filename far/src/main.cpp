@@ -342,7 +342,7 @@ static int MainProcess(
 	}
 			fprintf(stderr, "MainProcess - 7\n");
 	CloseConsole();
-			fprintf(stderr, "MainProcess - 8\n");
+			fprintf(stderr, "MainProcess - 8, FarExitCode = %d\n", (int)FarExitCode);
 	return FarExitCode;
 }
 
