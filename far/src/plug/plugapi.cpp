@@ -670,6 +670,7 @@ static INT_PTR WINAPI FarAdvControlSynched(INT_PTR ModuleNumber, int Command, vo
 		}
 
 		case ACTL_QUIT: {
+			fprintf(stderr, "far2m ACTL_QUIT, param=%d\n", (int)(intptr_t)Param1);
 			CloseFARMenu = TRUE;
 			FrameManager->ExitMainLoop(false, reinterpret_cast<intptr_t>(Param1));
 			return TRUE;

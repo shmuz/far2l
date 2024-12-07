@@ -4721,7 +4721,9 @@ static int DoAdvControl (lua_State *L, int Command, int Delta)
 			return lua_pushinteger(L, int1), 1;
 
 		case ACTL_QUIT:
-			int1 = PSInfo.AdvControl(pd->ModuleNumber, Command, (void*)luaL_optinteger(L,pos2,0), NULL);
+			int1 = luaL_optinteger(L,pos2,0);
+			fprintf(stderr, "luafar ACTL_QUIT, param=%d\n", (int)int1);
+			int1 = PSInfo.AdvControl(pd->ModuleNumber, Command, (void*)int1, NULL);
 			return lua_pushinteger(L, int1), 1;
 
 		case ACTL_GETCOLOR: {
