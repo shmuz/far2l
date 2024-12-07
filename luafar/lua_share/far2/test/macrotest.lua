@@ -725,7 +725,9 @@ end
 local function test_mf_EnumScripts()
   io.stderr:write("function test_mf_EnumScripts\n")
   local f = assert_func(mf.EnumScripts("Macro"))
+  io.stderr:write("test_mf_EnumScripts - 1\n")
   local s,i = f()
+  io.stderr:write("test_mf_EnumScripts - 2\n")
   assert_table(s)
   assert_num(i)
 end

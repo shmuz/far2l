@@ -1226,6 +1226,7 @@ local function EnumScripts (ScriptType)
   }
 
   local function copy(source)
+    io.stderr:write("EnumScripts - copy-1\n")
     local t={}
     for k,v in pairs(source) do
       if type(v) == "table" then
@@ -1243,6 +1244,7 @@ local function EnumScripts (ScriptType)
   local index
   return function()
     while true do
+      io.stderr:write("EnumScripts - loop-1\n")
       index = next(origin, index)
       if not index then return nil end
       local filter = ScriptFilter[ScriptType]
