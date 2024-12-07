@@ -324,16 +324,25 @@ static int MainProcess(
 			}
 
 			FrameManager->EnterMainLoop();
+			fprintf(stderr, "EnterMainLoop returned\n");
 		}
 
 		// очистим за собой!
+			fprintf(stderr, "MainProcess - 1\n");
 		SetScreen(0, 0, ScrX, ScrY, L' ', FarColorToReal(COL_COMMANDLINEUSERSCREEN));
+			fprintf(stderr, "MainProcess - 2\n");
 		Console.SetTextAttributes(InitAttributes);
+			fprintf(stderr, "MainProcess - 3\n");
 		ScrBuf.ResetShadow();
+			fprintf(stderr, "MainProcess - 4\n");
 		ScrBuf.Flush();
+			fprintf(stderr, "MainProcess - 5\n");
 		MoveRealCursor(0,0);
+			fprintf(stderr, "MainProcess - 6\n");
 	}
+			fprintf(stderr, "MainProcess - 7\n");
 	CloseConsole();
+			fprintf(stderr, "MainProcess - 8\n");
 	return FarExitCode;
 }
 
